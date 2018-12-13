@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SegueManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="600" Width="800">
+    <Grid Background="#FF969696">
+        <ListBox x:Name="lstAllSegues" HorizontalAlignment="Left" Height="524" Margin="10,35,0,0" VerticalAlignment="Top" Width="250" Background="#FFAAAAAA" BorderBrush="#FF646464"/>
+        <Button x:Name="btnSegment" Content="Segment" HorizontalAlignment="Left" Margin="265,10,0,0" VerticalAlignment="Top" Width="75" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <Button x:Name="btnAuthor" Content="Author" HorizontalAlignment="Left" Margin="345,10,0,0" VerticalAlignment="Top" Width="75" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <Button x:Name="btnPatreon" Content="Patreon" HorizontalAlignment="Left" Margin="425,10,0,0" VerticalAlignment="Top" Width="75" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <Button x:Name="btnDate" Content="Date" HorizontalAlignment="Left" Margin="505,10,0,0" VerticalAlignment="Top" Width="75" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <Button x:Name="btnReset" Content="Reset Filter" HorizontalAlignment="Left" Margin="682,10,0,0" VerticalAlignment="Top" Width="100" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <TextBox x:Name="txtFilter" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Background="#FFBEBEBE" BorderBrush="#FF646464"/>
+        <ListBox x:Name="lstFilterOptions" HorizontalAlignment="Left" Height="144" Margin="265,35,0,0" VerticalAlignment="Top" Width="315" Background="#FFAAAAAA" BorderBrush="#FF646464"/>
+        <ListBox x:Name="lstFilteredSegues" HorizontalAlignment="Left" Height="375" Margin="265,184,0,0" VerticalAlignment="Top" Width="315" Background="#FFAAAAAA" BorderBrush="#FF646464"/>
+        <Button x:Name="btnPlaySelected" Content="Play Selected" HorizontalAlignment="Left" Margin="585,539,0,0" VerticalAlignment="Top" Width="197" BorderBrush="#FF646464" Background="#FFBEBEBE"/>
+        <Button x:Name="btnPlayFiltered" Content="Play Random (Filter)" HorizontalAlignment="Left" Margin="585,514,0,0" VerticalAlignment="Top" Width="197" BorderBrush="#FF646464" Background="#FFBEBEBE"/>
+        <Button x:Name="btnPlayAll" Content="Play Random (All)" HorizontalAlignment="Left" Margin="585,489,0,0" VerticalAlignment="Top" Width="197" BorderBrush="#FF646464" Background="#FFBEBEBE"/>
+        <Image x:Name="imgSniggle" HorizontalAlignment="Left" Height="140" Margin="592,323,0,0" VerticalAlignment="Top" Width="190" OpacityMask="#0C000000" Source="Resources/sniggleboots_190.png"/>
+
     </Grid>
 </Window>
