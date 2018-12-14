@@ -15,6 +15,7 @@ namespace SegueManager
         public string title { get; set; }
         public string author { get; set; }
         public string segment { get; set; }
+        public bool patreon { get; set; }
         public DateTime date { get; set; }
 
         public Segue(string filename)
@@ -25,7 +26,16 @@ namespace SegueManager
             title = file.Tag.Title;
             author = file.Tag.Performers[0];
             segment = file.Tag.Album;
-            date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+            if(file.Tag.FirstGenre.ToUpper() == "PATREON")
+            {
+                patreon = true;
+            }
+            else
+            {
+                patreon = false;
+            }
+            //date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+            date = System.IO.File.GetCreationTime(filename);
         }
 
         public override string ToString()
