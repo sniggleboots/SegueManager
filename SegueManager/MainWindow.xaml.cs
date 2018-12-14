@@ -24,8 +24,10 @@ namespace SegueManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        Process myProcess = new Process();
-        ProcessStartInfo startInfo = new ProcessStartInfo("wmplayer.exe");
+        //Process myProcess = new Process();
+        //ProcessStartInfo startInfo = new ProcessStartInfo("wmplayer.exe");
+
+        List<Process> processList = new List<Process>();
 
         List<string> exts = new List<string>();
         List<Segue> segues = new List<Segue>();
@@ -34,6 +36,8 @@ namespace SegueManager
         List<string> authorList = new List<string>();
 
         string activeFilter = "";
+
+        Random random = new Random(int.Parse(DateTime.Now.ToString("yyMMddHHmm")));
 
         public MainWindow()
         {
@@ -169,19 +173,39 @@ namespace SegueManager
             myProcess.StartInfo = startInfo;
             myProcess.Start();
             */
+
+            PlaySegue(segues[random.Next(segues.Count)]);
+            BtnReset_Click(sender, e);
         }
 
         private void BtnPlayFiltered_Click(object sender, RoutedEventArgs e)
         {
-
+            if(lstFilterOptions.SelectedIndex != -1)
+            {
+                try
+                {
+                    PlaySegue(filteredFiles[random.Next(filteredFiles.Count)]);
+                    BtnReset_Click(sender, e);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't play a random segue from the specified filter if there are no segues that match the filter.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No filter selected");
+            }
         }
 
         private void LstFilterOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //event handler when a filter option is selected
             if(lstFilterOptions.SelectedIndex != -1)
             {
                 filteredFiles.Clear();
                 lstFilteredSegues.Items.Clear();
+                //switches which filter is active and fills the listbox accordingly
                 switch(activeFilter)
                 {
                     case "segment":
@@ -287,6 +311,67 @@ namespace SegueManager
                         break;
                 }
             }
+            else
+            {
+                lstFilterOptions.Items.Clear();
+                lstFilteredSegues.Items.Clear();
+            }
+        }
+
+        private void PlaySegue(Segue segue)
+        {
+            Process myProcess = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo("wmplayer.exe");
+            startInfo.Arguments = segue.filename;
+            myProcess.StartInfo = startInfo;
+            myProcess.Start();
+
+            processList.Add(myProcess);
+        }
+
+        private void LstAllSegues_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lstAllSegues.SelectedIndex != -1)
+            {
+                lstFilteredSegues.SelectedIndex = -1;
+            }
+        }
+
+        private void LstFilteredSegues_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lstFilteredSegues.SelectedIndex != -1)
+            {
+                lstAllSegues.SelectedIndex = -1;
+            }
+        }
+
+        private void BtnPlaySelected_Click(object sender, RoutedEventArgs e)
+        {
+            if(lstAllSegues.SelectedIndex != -1)
+            {
+                PlaySegue(segues[lstAllSegues.SelectedIndex]);
+            }
+            else if(lstFilteredSegues.SelectedIndex != -1)
+            {
+                PlaySegue(filteredFiles[lstFilteredSegues.SelectedIndex]);
+            }
+            else
+            {
+                MessageBox.Show("No segue selected");
+            }
+        }
+
+        private void BtnKill_Click(object sender, RoutedEventArgs e)
+        {
+            for(int i = processList.Count - 1; i >= 0; i--)
+            {
+                if(!processList[i].HasExited)
+                {
+                    processList[i].Kill();
+                }
+                processList.RemoveAt(i);
+            }
+            processList.Clear();
         }
     }
 }

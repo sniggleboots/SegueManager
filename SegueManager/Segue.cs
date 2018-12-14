@@ -34,8 +34,8 @@ namespace SegueManager
             {
                 patreon = false;
             }
-            //date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
-            date = System.IO.File.GetCreationTime(filename);
+            date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+            //date = System.IO.File.GetCreationTime(filename);
         }
 
         public override string ToString()
