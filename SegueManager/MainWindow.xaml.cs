@@ -37,7 +37,7 @@ namespace SegueManager
 
         string activeFilter = "";
 
-        Random random = new Random(int.Parse(DateTime.Now.ToString("yyMMddHHmm")));
+        Random random = new Random(int.Parse(DateTime.Now.ToString("dmmssfff")));
 
         public MainWindow()
         {
@@ -54,7 +54,7 @@ namespace SegueManager
             //iterate over the entire segue folder, find all files ending with the extentions added above. Nested foreach is probably pretty inefficient, but I don't know how to make EnumerateFiles check for more than one filter
             foreach (string ext in exts)
             {
-                foreach (string filename in Directory.EnumerateFiles(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory,"..\\..\\Segues")), ext))
+                foreach (string filename in Directory.EnumerateFiles(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory,"Segues")), ext))
                 {
                     //add all valid files to the list of segues, using the Segue class
                     segues.Add(new Segue(filename));

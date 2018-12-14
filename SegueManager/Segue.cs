@@ -23,11 +23,28 @@ namespace SegueManager
         {
             file = File.Create(filename);
 
+            this.filename = filename;
+
             try
             {
-                this.filename = filename;
                 title = file.Tag.Title;
+            }
+            catch
+            {
+                title = "test";
+            }
+
+            try
+            {
                 segment = file.Tag.Album;
+            }
+            catch
+            {
+                segment = "test";
+            }
+
+            try
+            {
                 if (file.Tag.FirstGenre.ToUpper() == "PATREON")
                 {
                     patreon = true;
@@ -36,16 +53,31 @@ namespace SegueManager
                 {
                     patreon = false;
                 }
-                date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
-                //date = System.IO.File.GetCreationTime(filename);
-                author = file.Tag.Performers[0];
             }
             catch
             {
-                Debug.WriteLine("Segue didn't have an artist listed, probably");
-                author = "test";
+                patreon = false;
             }
 
+            try
+            {
+                date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+                //date = System.IO.File.GetCreationTime(filename);
+            }
+            catch
+            {
+                date = new DateTime(0, 0, 0);
+            }
+
+            try
+            {
+                author = file.Tag.FirstPerformer;
+            }
+            catch
+            {
+                author = "test";
+            }
+           
         }
 
         public override string ToString()
