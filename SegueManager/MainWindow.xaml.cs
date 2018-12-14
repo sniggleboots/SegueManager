@@ -39,30 +39,37 @@ namespace SegueManager
         {
             InitializeComponent();
 
+            //adds extensions to look out for to list
             exts.Add("*.mp3");
             exts.Add("*.wav");
 
+            //these will be filled later with info pulled from all segues
             string allsegments = "";
             string allauthors = "";
 
+            //iterate over the entire segue folder, find all files ending with the extentions added above. Nested foreach is probably pretty inefficient, but I don't know how to make EnumerateFiles check for more than one filter
             foreach (string ext in exts)
             {
                 foreach (string filename in Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory,"Segues"), ext))
                 {
+                    //add all valid files to the list of segues, using the Segue class
                     segues.Add(new Segue(filename));
                 }
             }
 
             foreach (Segue segue in segues)
             {
+                //fill listbox with all segues
                 lstAllSegues.Items.Add(segue);
 
+                //if the "segment" part of a segue does not yet exist in the list, add it to the segmentList so it can be used as a filter later. Also add it to the string, so it doesn't get added again later
                 if(!allsegments.ToUpper().Contains(segue.segment.ToUpper()))
                 {
                     allsegments += segue.segment + " ";
                     segmentList.Add(segue.segment);
                 }
 
+                //analogous with segment
                 if(!allauthors.ToUpper().Contains(segue.author.ToUpper()))
                 {
                     allauthors += segue.author + " ";
@@ -71,6 +78,7 @@ namespace SegueManager
             }
         }
 
+        //helper method to fill listboxes
         private void FillListbox(ListBox listbox, List<Segue> seguelist)
         {
             listbox.Items.Clear();
@@ -80,6 +88,7 @@ namespace SegueManager
             }
         }
 
+        //event handler for the textbox filter, if the entered text matches anything in the title, author or segment, it is retained in the listbox.
         private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(txtFilter.Text != string.Empty)
@@ -101,6 +110,7 @@ namespace SegueManager
             }
         }
 
+        //event handler for Segment filter button. Pulls all the possible segments from the list made earlier and puts it in the filter options listbox. From there, the user will be able to filter by them.
         private void BtnSegment_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "segment";
@@ -111,6 +121,7 @@ namespace SegueManager
             }
         }
 
+        //analogous Segment
         private void BtnAuthor_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "author";
@@ -121,6 +132,7 @@ namespace SegueManager
             }
         }
 
+        //analogous
         private void BtnPatreon_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "patreon";
@@ -129,6 +141,7 @@ namespace SegueManager
             lstFilterOptions.Items.Add("No patreon");
         }
 
+        //analogous
         private void BtnDate_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "date";
@@ -140,6 +153,7 @@ namespace SegueManager
             lstFilterOptions.Items.Add("Older than four years");
         }
 
+        //resets all filters
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "";
