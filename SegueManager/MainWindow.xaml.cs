@@ -163,10 +163,130 @@ namespace SegueManager
 
         private void BtnPlayAll_Click(object sender, RoutedEventArgs e)
         {
+            /*
             string test = segues[0].filename;
             startInfo.Arguments = test;
             myProcess.StartInfo = startInfo;
             myProcess.Start();
+            */
+        }
+
+        private void BtnPlayFiltered_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LstFilterOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lstFilterOptions.SelectedIndex != -1)
+            {
+                filteredFiles.Clear();
+                lstFilteredSegues.Items.Clear();
+                switch(activeFilter)
+                {
+                    case "segment":
+                        foreach(Segue segue in segues)
+                        {
+                            if(segue.segment.ToUpper().Contains(lstFilterOptions.SelectedItem.ToString().ToUpper()))
+                            {
+                                filteredFiles.Add(segue);
+                            }
+                        }
+                        FillListbox(lstFilteredSegues, filteredFiles);
+                        break;
+
+                    case "author":
+                        foreach(Segue segue in segues)
+                        {
+                            if(segue.author.ToUpper().Contains(lstFilterOptions.SelectedItem.ToString().ToUpper()))
+                            {
+                                filteredFiles.Add(segue);
+                            }
+                        }
+                        FillListbox(lstFilteredSegues, filteredFiles);
+                        break;
+
+                    case "date":
+                        switch(lstFilterOptions.SelectedIndex)
+                        {
+                            case 0:
+                                foreach(Segue segue in segues)
+                                {
+                                    TimeSpan add = new TimeSpan(365, 0, 0, 0);
+                                    if(segue.date.Add(add) > DateTime.Now)
+                                    {
+                                        filteredFiles.Add(segue);
+                                    }
+                                }
+                                FillListbox(lstFilteredSegues, filteredFiles);
+                                break;
+
+                            case 1:
+                                foreach(Segue segue in segues)
+                                {
+                                    TimeSpan add = new TimeSpan(-365, 0, 0, 0);
+                                    if(segue.date <= DateTime.Now.Add(add))
+                                    {
+                                        filteredFiles.Add(segue);
+                                    }
+                                }
+                                FillListbox(lstFilteredSegues, filteredFiles);
+                                break;
+
+                            case 2:
+                                foreach(Segue segue in segues)
+                                {
+                                    TimeSpan add = new TimeSpan(-365 * 2, 0, 0, 0);
+                                    if (segue.date <= DateTime.Now.Add(add))
+                                    {
+                                        filteredFiles.Add(segue);
+                                    }
+                                }
+                                FillListbox(lstFilteredSegues, filteredFiles);
+                                break;
+
+                            case 3:
+                                foreach (Segue segue in segues)
+                                {
+                                    TimeSpan add = new TimeSpan(-365 * 3, 0, 0, 0);
+                                    if (segue.date <= DateTime.Now.Add(add))
+                                    {
+                                        filteredFiles.Add(segue);
+                                    }
+                                }
+                                FillListbox(lstFilteredSegues, filteredFiles);
+                                break;
+
+                            case 4:
+                                foreach (Segue segue in segues)
+                                {
+                                    TimeSpan add = new TimeSpan(-365 * 4, 0, 0, 0);
+                                    if (segue.date <= DateTime.Now.Add(add))
+                                    {
+                                        filteredFiles.Add(segue);
+                                    }
+                                }
+                                FillListbox(lstFilteredSegues, filteredFiles);
+                                break;
+                        }
+                        break;
+
+                    case "patreon":
+                        foreach (Segue segue in segues)
+                        {
+                            if (lstFilterOptions.SelectedIndex == 0 && segue.patreon == true)
+                            {
+                                filteredFiles.Add(segue);
+                            }
+                            else if(lstFilterOptions.SelectedIndex == 1 && segue.patreon == false)
+                            {
+                                filteredFiles.Add(segue);
+                            }
+                        }
+                        FillListbox(lstFilteredSegues, filteredFiles);
+                        break;
+                }
+            }
         }
     }
 }
