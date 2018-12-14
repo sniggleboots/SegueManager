@@ -45,6 +45,7 @@ namespace SegueManager
 
             try
             {
+                //actually, this is the one that fails, because most Genre fields are empty. Oh well.
                 if (file.Tag.FirstGenre.ToUpper() == "PATREON")
                 {
                     patreon = true;
