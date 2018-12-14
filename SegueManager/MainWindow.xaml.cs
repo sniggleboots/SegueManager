@@ -54,13 +54,16 @@ namespace SegueManager
             //iterate over the entire segue folder, find all files ending with the extentions added above. Nested foreach is probably pretty inefficient, but I don't know how to make EnumerateFiles check for more than one filter
             foreach (string ext in exts)
             {
-                foreach (string filename in Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory,"Segues"), ext))
+                foreach (string filename in Directory.EnumerateFiles(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory,"..\\..\\Segues")), ext))
                 {
                     //add all valid files to the list of segues, using the Segue class
                     segues.Add(new Segue(filename));
                 }
             }
 
+            int maxlengthAuthor = 0;
+            int maxlengthTitle = 0;
+            int maxlengthSegment = 0;
             foreach (Segue segue in segues)
             {
                 //fill listbox with all segues
@@ -78,6 +81,34 @@ namespace SegueManager
                 {
                     allauthors += segue.author + " ";
                     authorList.Add(segue.author);
+                }
+
+                if(segue.author.Length > maxlengthAuthor)
+                {
+                    maxlengthAuthor = segue.author.Length;
+                }
+                if(segue.segment.ToString().Length > maxlengthSegment)
+                {
+                    maxlengthSegment = segue.segment.ToString().Length;
+                }
+                if (segue.title.ToString().Length > maxlengthTitle)
+                {
+                    maxlengthTitle = segue.title.ToString().Length;
+                }
+            }
+            foreach (Segue segue in segues)
+            {
+                while(segue.author.Length < maxlengthAuthor)
+                {
+                    segue.author += " ";
+                }
+                while(segue.segment.Length < maxlengthSegment)
+                {
+                    segue.segment += " ";
+                }
+                while(segue.title.Length < maxlengthTitle)
+                {
+                    segue.title += " ";
                 }
             }
         }
@@ -175,7 +206,6 @@ namespace SegueManager
             */
 
             PlaySegue(segues[random.Next(segues.Count)]);
-            BtnReset_Click(sender, e);
         }
 
         private void BtnPlayFiltered_Click(object sender, RoutedEventArgs e)
@@ -185,7 +215,6 @@ namespace SegueManager
                 try
                 {
                     PlaySegue(filteredFiles[random.Next(filteredFiles.Count)]);
-                    BtnReset_Click(sender, e);
                 }
                 catch
                 {

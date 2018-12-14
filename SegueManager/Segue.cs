@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,27 +23,36 @@ namespace SegueManager
         {
             file = File.Create(filename);
 
-            this.filename = filename;
-            title = file.Tag.Title;
-            author = file.Tag.Performers[0];
-            segment = file.Tag.Album;
-            if(file.Tag.FirstGenre.ToUpper() == "PATREON")
+            try
             {
-                patreon = true;
+                this.filename = filename;
+                title = file.Tag.Title;
+                segment = file.Tag.Album;
+                if (file.Tag.FirstGenre.ToUpper() == "PATREON")
+                {
+                    patreon = true;
+                }
+                else
+                {
+                    patreon = false;
+                }
+                date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+                //date = System.IO.File.GetCreationTime(filename);
+                author = file.Tag.Performers[0];
             }
-            else
+            catch
             {
-                patreon = false;
+                Debug.WriteLine("Segue didn't have an artist listed, probably");
+                author = "test";
             }
-            date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
-            //date = System.IO.File.GetCreationTime(filename);
+
         }
 
         public override string ToString()
         {
             string output = "";
             output += title + "\t";
-            output += author + "\t";
+            output += "|" + author + "|\t";
             output += segment + "\t";
             output += date;
             return output;
