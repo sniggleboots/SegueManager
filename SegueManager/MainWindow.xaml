@@ -8,19 +8,20 @@
         Title="SegueManager 1.0" Height="621" Width="1165.3">
     <Grid Background="#FF969696">
         <ListBox x:Name="lstAllSegues" HorizontalAlignment="Left" Height="537" Margin="10,35,0,0" VerticalAlignment="Top" Width="561" Background="#FFAAAAAA" BorderBrush="#FF646464" SelectionChanged="LstAllSegues_SelectionChanged" FontFamily="Courier New"/>
-        <Button x:Name="btnSegment" Content="Segment" HorizontalAlignment="Left" Margin="576,10,0,0" VerticalAlignment="Top" Width="62" Background="#FFBEBEBE" BorderBrush="#FF646464" RenderTransformOrigin="0.253,0.35" Click="BtnSegment_Click"/>
-        <Button x:Name="btnAuthor" Content="Author" HorizontalAlignment="Left" Margin="644,10,0,0" VerticalAlignment="Top" Width="66" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnAuthor_Click"/>
-        <Button x:Name="btnPatreon" Content="Patreon" HorizontalAlignment="Left" Margin="716,10,0,0" VerticalAlignment="Top" Width="52" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnPatreon_Click"/>
-        <Button x:Name="btnDate" Content="Date" HorizontalAlignment="Left" Margin="774,10,0,0" VerticalAlignment="Top" Width="44" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnDate_Click"/>
-        <Button x:Name="btnReset" Content="Reset Filter" HorizontalAlignment="Left" Margin="822,10,0,0" VerticalAlignment="Top" Width="68" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnReset_Click"/>
+        <Button x:Name="btnSegment" Content="Segment" HorizontalAlignment="Left" Margin="710,10,0,0" VerticalAlignment="Top" Width="77" Background="#FFBEBEBE" BorderBrush="#FF646464" RenderTransformOrigin="0.253,0.35" Click="BtnSegment_Click"/>
+        <Button x:Name="btnAuthor" Content="Author" HorizontalAlignment="Left" Margin="792,10,0,0" VerticalAlignment="Top" Width="81" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnAuthor_Click"/>
+        <Button x:Name="btnPatreon" Content="Patreon" HorizontalAlignment="Left" Margin="878,10,0,0" VerticalAlignment="Top" Width="65" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnPatreon_Click"/>
+        <Button x:Name="btnDate" Content="Date" HorizontalAlignment="Left" Margin="948,10,0,0" VerticalAlignment="Top" Width="53" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnDate_Click"/>
+        <Button x:Name="btnReset" Content="Reset Filter" HorizontalAlignment="Left" Margin="1039,10,0,0" VerticalAlignment="Top" Width="83" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnReset_Click"/>
         <TextBox x:Name="txtFilter" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="561" Background="#FFBEBEBE" BorderBrush="#FF646464" TextChanged="TxtFilter_TextChanged"/>
-        <ListBox x:Name="lstFilterOptions" HorizontalAlignment="Left" Height="144" Margin="576,35,0,0" VerticalAlignment="Top" Width="314" Background="#FFAAAAAA" BorderBrush="#FF646464" SelectionChanged="LstFilterOptions_SelectionChanged" FontFamily="Courier New"/>
+        <ListBox x:Name="lstFilterOptions" HorizontalAlignment="Left" Height="144" Margin="576,35,0,0" VerticalAlignment="Top" Width="425" Background="#FFAAAAAA" BorderBrush="#FF646464" SelectionChanged="LstFilterOptions_SelectionChanged" FontFamily="Courier New"/>
         <ListBox x:Name="lstFilteredSegues" HorizontalAlignment="Left" Height="289" Margin="576,184,0,0" VerticalAlignment="Top" Width="563" Background="#FFAAAAAA" BorderBrush="#FF646464" SelectionChanged="LstFilteredSegues_SelectionChanged" FontFamily="Courier New"/>
         <Button x:Name="btnPlaySelected" Content="Play Selected" HorizontalAlignment="Left" Margin="576,478,0,0" VerticalAlignment="Top" Width="562" BorderBrush="#FF646464" Background="#FFBEBEBE" Click="BtnPlaySelected_Click"/>
         <Button x:Name="btnPlayFiltered" Content="Play Random (Filter)" HorizontalAlignment="Left" Margin="576,502,0,0" VerticalAlignment="Top" Width="562" BorderBrush="#FF646464" Background="#FFBEBEBE" Click="BtnPlayFiltered_Click"/>
         <Button x:Name="btnPlayAll" Content="Play Random (All)" HorizontalAlignment="Left" Margin="576,527,0,0" VerticalAlignment="Top" Width="562" BorderBrush="#FF646464" Background="#FFBEBEBE" Click="BtnPlayAll_Click"/>
-        <Image x:Name="imgSniggle" HorizontalAlignment="Left" Height="70" Margin="908,62,0,0" VerticalAlignment="Top" Width="96" OpacityMask="Black" Source="Resources/sniggleboots_190.png"/>
+        <Image x:Name="imgSniggle" HorizontalAlignment="Left" Height="70" Margin="1026,70,0,0" VerticalAlignment="Top" Width="96" OpacityMask="Black" Source="Resources/sniggleboots_190.png"/>
         <Button x:Name="btnKill" Content="Kill WMP Window" HorizontalAlignment="Left" Margin="576,552,0,0" VerticalAlignment="Top" Width="562" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnKill_Click"/>
+        <Button x:Name="btnPodcast" Content="Podcast Sounds" HorizontalAlignment="Left" Margin="576,10,0,0" VerticalAlignment="Top" Width="129" Background="#FFBEBEBE" BorderBrush="#FF646464" Click="BtnPodcast_Click"/>
 
     </Grid>
 </Window>

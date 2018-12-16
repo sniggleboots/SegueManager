@@ -27,7 +27,14 @@ namespace SegueManager
 
             try
             {
-                title = file.Tag.Title;
+                if(file.Tag.Title != null)
+                {
+                    title = file.Tag.Title;
+                }
+                else
+                {
+                    title = "test";
+                }
             }
             catch
             {
@@ -36,7 +43,14 @@ namespace SegueManager
 
             try
             {
-                segment = file.Tag.Album;
+                if(file.Tag.Album != null)
+                {
+                    segment = file.Tag.Album;
+                }
+                else
+                {
+                    segment = "test";
+                }
             }
             catch
             {
@@ -45,15 +59,22 @@ namespace SegueManager
 
             try
             {
-                //actually, this is the one that fails, because most Genre fields are empty. Oh well.
-                if (file.Tag.FirstGenre.ToUpper() == "PATREON")
+                if(file.Tag.FirstGenre != null)
                 {
-                    patreon = true;
+                    if (file.Tag.FirstGenre.ToUpper() == "PATREON")
+                    {
+                        patreon = true;
+                    }
+                    else
+                    {
+                        patreon = false;
+                    }
                 }
                 else
                 {
                     patreon = false;
                 }
+                
             }
             catch
             {
@@ -62,17 +83,31 @@ namespace SegueManager
 
             try
             {
-                date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
-                //date = System.IO.File.GetCreationTime(filename);
+                if(file.Tag.Track != null || file.Tag.Track != 0)
+                {
+                    date = new DateTime(int.Parse(file.Tag.Track.ToString().Substring(0, 2)) + 2000, int.Parse(file.Tag.Track.ToString().Substring(2, 2)), int.Parse(file.Tag.Track.ToString().Substring(4, 2)));
+                    //date = System.IO.File.GetCreationTime(filename);
+                }
+                else
+                {
+                    date = new DateTime(1, 1, 1);
+                }
             }
             catch
             {
-                date = new DateTime(0, 0, 0);
+                date = new DateTime(1, 1, 1);
             }
 
             try
             {
-                author = file.Tag.FirstPerformer;
+                if(file.Tag.FirstPerformer != null)
+                {
+                    author = file.Tag.FirstPerformer;
+                }
+                else
+                {
+                    author = "test";
+                }
             }
             catch
             {

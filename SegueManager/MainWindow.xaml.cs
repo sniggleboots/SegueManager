@@ -46,6 +46,7 @@ namespace SegueManager
             //adds extensions to look out for to list
             exts.Add("*.mp3");
             exts.Add("*.wav");
+            exts.Add("*.wma");
 
             //these will be filled later with info pulled from all segues
             string allsegments = "";
@@ -70,14 +71,14 @@ namespace SegueManager
                 lstAllSegues.Items.Add(segue);
 
                 //if the "segment" part of a segue does not yet exist in the list, add it to the segmentList so it can be used as a filter later. Also add it to the string, so it doesn't get added again later
-                if(!allsegments.ToUpper().Contains(segue.segment.ToUpper()))
+                if(!allsegments.ToUpper().Contains(segue.segment.ToUpper()) && segue.segment.ToUpper() != "FX")
                 {
                     allsegments += segue.segment + " ";
                     segmentList.Add(segue.segment);
                 }
 
                 //analogous with segment
-                if(!allauthors.ToUpper().Contains(segue.author.ToUpper()))
+                if(!allauthors.ToUpper().Contains(segue.author.ToUpper()) && segue.author.ToUpper() != "FX")
                 {
                     allauthors += segue.author + " ";
                     authorList.Add(segue.author);
@@ -98,11 +99,11 @@ namespace SegueManager
             }
             foreach (Segue segue in segues)
             {
-                while(segue.author.Length < maxlengthAuthor)
+                while(segue.author.Length < maxlengthAuthor && segue.author.ToUpper() != "FX")
                 {
                     segue.author += " ";
                 }
-                while(segue.segment.Length < maxlengthSegment)
+                while(segue.segment.Length < maxlengthSegment && segue.author.ToUpper() != "FX")
                 {
                     segue.segment += " ";
                 }
@@ -150,6 +151,7 @@ namespace SegueManager
         {
             activeFilter = "segment";
             lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
             foreach(string segment in segmentList)
             {
                 lstFilterOptions.Items.Add(segment);
@@ -161,6 +163,7 @@ namespace SegueManager
         {
             activeFilter = "author";
             lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
             foreach (string author in authorList)
             {
                 lstFilterOptions.Items.Add(author);
@@ -168,10 +171,27 @@ namespace SegueManager
         }
 
         //analogous
+        private void BtnPodcast_Click(object sender, RoutedEventArgs e)
+        {
+            activeFilter = "FX";
+            lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
+            foreach (Segue segue in segues)
+            {
+                if(segue.segment.ToUpper() == "FX" || segue.author.ToUpper() == "FX")
+                {
+                    filteredFiles.Add(segue);
+                }
+            }
+            FillListbox(lstFilteredSegues, filteredFiles);
+        }
+
+        //analogous
         private void BtnPatreon_Click(object sender, RoutedEventArgs e)
         {
             activeFilter = "patreon";
             lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
             lstFilterOptions.Items.Add("Patreon");
             lstFilterOptions.Items.Add("No patreon");
         }
@@ -181,6 +201,7 @@ namespace SegueManager
         {
             activeFilter = "date";
             lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
             lstFilterOptions.Items.Add("Younger than a year");
             lstFilterOptions.Items.Add("Older than a year");
             lstFilterOptions.Items.Add("Older than two years");
@@ -193,6 +214,8 @@ namespace SegueManager
         {
             activeFilter = "";
             lstFilterOptions.Items.Clear();
+            lstFilteredSegues.Items.Clear();
+            filteredFiles.Clear();
             txtFilter.Text = "";
         }
 
@@ -205,7 +228,12 @@ namespace SegueManager
             myProcess.Start();
             */
 
-            PlaySegue(segues[random.Next(segues.Count)]);
+            int randomNumber;
+            do
+            {
+                randomNumber = random.Next(segues.Count);
+            } while (segues[randomNumber].author.ToUpper() == "FX" || segues[randomNumber].segment.ToUpper() == "FX");
+            PlaySegue(segues[randomNumber]);
         }
 
         private void BtnPlayFiltered_Click(object sender, RoutedEventArgs e)
@@ -218,7 +246,7 @@ namespace SegueManager
                 }
                 catch
                 {
-                    MessageBox.Show("Can't play a random segue from the specified filter if there are no segues that match the filter.");
+                    MessageBox.Show("You'll only see this if I really fucked up somewhere. Oopsie!");
                 }
             }
             else
@@ -266,7 +294,7 @@ namespace SegueManager
                                 foreach(Segue segue in segues)
                                 {
                                     TimeSpan add = new TimeSpan(365, 0, 0, 0);
-                                    if(segue.date.Add(add) > DateTime.Now)
+                                    if(segue.date.Add(add) > DateTime.Now && segue.segment.ToUpper() != "FX")
                                     {
                                         filteredFiles.Add(segue);
                                     }
@@ -278,7 +306,7 @@ namespace SegueManager
                                 foreach(Segue segue in segues)
                                 {
                                     TimeSpan add = new TimeSpan(-365, 0, 0, 0);
-                                    if(segue.date <= DateTime.Now.Add(add))
+                                    if(segue.date <= DateTime.Now.Add(add) && segue.segment.ToUpper() != "FX")
                                     {
                                         filteredFiles.Add(segue);
                                     }
@@ -290,7 +318,7 @@ namespace SegueManager
                                 foreach(Segue segue in segues)
                                 {
                                     TimeSpan add = new TimeSpan(-365 * 2, 0, 0, 0);
-                                    if (segue.date <= DateTime.Now.Add(add))
+                                    if (segue.date <= DateTime.Now.Add(add) && segue.segment.ToUpper() != "FX")
                                     {
                                         filteredFiles.Add(segue);
                                     }
@@ -302,7 +330,7 @@ namespace SegueManager
                                 foreach (Segue segue in segues)
                                 {
                                     TimeSpan add = new TimeSpan(-365 * 3, 0, 0, 0);
-                                    if (segue.date <= DateTime.Now.Add(add))
+                                    if (segue.date <= DateTime.Now.Add(add) && segue.segment.ToUpper() != "FX")
                                     {
                                         filteredFiles.Add(segue);
                                     }
@@ -314,7 +342,7 @@ namespace SegueManager
                                 foreach (Segue segue in segues)
                                 {
                                     TimeSpan add = new TimeSpan(-365 * 4, 0, 0, 0);
-                                    if (segue.date <= DateTime.Now.Add(add))
+                                    if (segue.date <= DateTime.Now.Add(add) && segue.segment.ToUpper() != "FX")
                                     {
                                         filteredFiles.Add(segue);
                                     }
@@ -327,11 +355,11 @@ namespace SegueManager
                     case "patreon":
                         foreach (Segue segue in segues)
                         {
-                            if (lstFilterOptions.SelectedIndex == 0 && segue.patreon == true)
+                            if (lstFilterOptions.SelectedIndex == 0 && segue.patreon == true && segue.segment.ToUpper() != "FX")
                             {
                                 filteredFiles.Add(segue);
                             }
-                            else if(lstFilterOptions.SelectedIndex == 1 && segue.patreon == false)
+                            else if(lstFilterOptions.SelectedIndex == 1 && segue.patreon == false && segue.segment.ToUpper() != "FX")
                             {
                                 filteredFiles.Add(segue);
                             }
@@ -378,7 +406,7 @@ namespace SegueManager
         {
             if(lstAllSegues.SelectedIndex != -1)
             {
-                PlaySegue(segues[lstAllSegues.SelectedIndex]);
+                PlaySegue((Segue)lstAllSegues.SelectedItem);
             }
             else if(lstFilteredSegues.SelectedIndex != -1)
             {
